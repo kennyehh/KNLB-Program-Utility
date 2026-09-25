@@ -6,7 +6,15 @@ from pathlib import Path
 from textual import work
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical
-from textual.widgets import Button, ContentSwitcher, Input, RichLog, Static
+from textual.widgets import (
+    Button,
+    ContentSwitcher,
+    Input,
+    LoadingIndicator,
+    ProgressBar,
+    RichLog,
+    Static,
+)
 
 from backend.catalog import CatalogEntry, CatalogError, load_catalog, resolve_target
 from backend.critical_packages import is_critical
@@ -36,9 +44,14 @@ _NAV_IDS = {
 # usually enabling another repo or reading the program's own install docs.
 _NOT_FOUND_HINT = "you may have to add additional repos or check the installation instructions"
 
+# Buttons that start a package-manager/font job. Only one job runs at a time
+# (package managers hold an exclusive lock anyway), so all of these are
+# disabled together while anything is running.
+_JOB_BUTTON_IDS = ("install-selected", "uninstall-selected", "install-font")
+
 
 class KNLBApp(App):
-    CSS_PATH = "app.css"
+    CSS_PATH = "app.tcss"
     TITLE = "KNLB Installer"
 
     def __init__(self, logger: SessionLogger, distro: DistroInfo):
@@ -47,6 +60,7 @@ class KNLBApp(App):
         self.distro = distro
         self.catalog_entries: list[CatalogEntry] = []
         self._installed_names: set[str] = set()
+        self._busy = False
 
     def compose(self) -> ComposeResult:
         yield Static(KNLB_ASCII, id="banner")
@@ -81,6 +95,10 @@ class KNLBApp(App):
                 with Horizontal(id="font-action-buttons"):
                     yield Button("Install Font", id="install-font", variant="success")
                     yield Button("Reset", id="reset-font-fields", variant="warning")
+        with Horizontal(id="status-bar"):
+            yield LoadingIndicator(id="status-spinner")
+            yield Static("Idle", id="status-label")
+            yield ProgressBar(id="status-progress", show_eta=False)
         yield RichLog(id="output-log", wrap=True, highlight=False)
 
     def on_mount(self) -> None:
@@ -108,7 +126,36 @@ class KNLBApp(App):
 
         self._check_installed_async(available)
         self._load_uninstall_list_async()
+        self._set_busy_widgets(False)
         self.query_one("#filter-input").focus()
+
+    def _set_busy_widgets(self, busy: bool) -> None:
+        self.query_one("#status-spinner").display = busy
+        self.query_one("#status-progress").display = busy
+        for button_id in _JOB_BUTTON_IDS:
+            self.query_one(f"#{button_id}", Button).disabled = busy
+
+    def _begin_job(self, label: str, total: int | None) -> bool:
+        """Mark a job as running. Returns False (and does nothing) if one already is."""
+        if self._busy:
+            self.query_one("#output-log", RichLog).write("Already working — wait for the current job to finish.")
+            return False
+        self._busy = True
+        self.query_one("#status-label", Static).update(label)
+        self.query_one("#status-progress", ProgressBar).update(total=total, progress=0)
+        self._set_busy_widgets(True)
+        return True
+
+    def _update_job(self, label: str) -> None:
+        self.query_one("#status-label", Static).update(label)
+
+    def _advance_job(self) -> None:
+        self.query_one("#status-progress", ProgressBar).advance(1)
+
+    def _end_job(self, label: str) -> None:
+        self._busy = False
+        self.query_one("#status-label", Static).update(label)
+        self._set_busy_widgets(False)
 
     @work()
     async def _check_installed_async(self, entries: list[CatalogEntry]) -> None:
@@ -266,19 +313,31 @@ class KNLBApp(App):
             log.write("Nothing selected to install.")
             return
 
+        # Claimed synchronously here, not inside the worker, so a second press
+        # before the worker starts can't slip through.
+        if not self._begin_job("Starting install...", total=len(selected_entries)):
+            return
         self._install_selected_async(selected_entries)
 
     @work()
     async def _install_selected_async(self, selected_entries: list[CatalogEntry]) -> None:
         log = self.query_one("#output-log", RichLog)
         outcomes: list[InstallOutcome] = []
+        total = len(selected_entries)
 
-        for entry in selected_entries:
-            outcome = await self._install_catalog_entry(entry)
-            outcomes.append(outcome)
-            if outcome.ok:
-                self._installed_names.add(entry.name)
-            log.write(f"[{'OK' if outcome.ok else 'FAILED'}] {outcome.name}: {outcome.message}")
+        try:
+            for index, entry in enumerate(selected_entries, start=1):
+                self._update_job(f"Installing {entry.name} ({index}/{total})...")
+                log.write(f"Installing {entry.name} ({index}/{total})...")
+                outcome = await self._install_catalog_entry(entry)
+                outcomes.append(outcome)
+                if outcome.ok:
+                    self._installed_names.add(entry.name)
+                log.write(f"[{'OK' if outcome.ok else 'FAILED'}] {outcome.name}: {outcome.message}")
+                self._advance_job()
+        finally:
+            failed = sum(1 for o in outcomes if not o.ok)
+            self._end_job(f"Install finished: {len(outcomes) - failed} succeeded, {failed} failed")
 
         self.logger.log_install_batch(outcomes)
         log.write("--- Install Selected finished ---")
@@ -335,13 +394,19 @@ class KNLBApp(App):
 
         custom_path_value = font_panel.custom_path
         use_custom_font_path = font_panel.use_custom_path
+        # No meaningful step count for a single download, so the bar is indeterminate.
+        if not self._begin_job("Downloading and installing font...", total=None):
+            return
         self._font_install_async(font_url, custom_path_value, use_custom_font_path)
 
     @work()
     async def _font_install_async(self, font_url: str, custom_path_value: str, use_custom_font_path: bool) -> None:
         log = self.query_one("#output-log", RichLog)
         dest = Path(custom_path_value) if (use_custom_font_path and custom_path_value) else None
-        result = await asyncio.to_thread(install_font_from_url, font_url, dest, self.logger)
+        try:
+            result = await asyncio.to_thread(install_font_from_url, font_url, dest, self.logger)
+        finally:
+            self._end_job("Font install finished")
         log.write(f"[{'OK' if result.ok else 'FAILED'}] font ({font_url}): {result.message}")
         self.logger.log_install_batch(
             [InstallOutcome(name=f"font: {font_url}", ok=result.ok, message=result.message)]
@@ -372,38 +437,51 @@ class KNLBApp(App):
         if not selected:
             log.write("Nothing selected to uninstall.")
             return
+        # Claimed before the confirmation modal so a double press can't open two.
+        if not self._begin_job("Waiting for uninstall confirmation...", total=len(selected)):
+            return
         self._confirm_and_uninstall_async(selected)
 
     @work()
     async def _confirm_and_uninstall_async(self, programs: list[InstalledProgram]) -> None:
         log = self.query_one("#output-log", RichLog)
         names = [p.name for p in programs]
-        confirmed = await self.push_screen_wait(ConfirmUninstallModal(names))
-        if not confirmed:
-            log.write("Uninstall cancelled.")
-            return
-
-        pm_name = self.distro.package_manager
-        if not pm_name:
-            log.write("Cannot uninstall: no package manager detected")
-            return
-
-        backend = get_backend(pm_name)
         outcomes: list[InstallOutcome] = []
-        for program in programs:
-            result = await asyncio.to_thread(backend.uninstall, program.name)
-            self.logger.log_command(result)
-            outcome = InstallOutcome(
-                name=program.name,
-                package_manager=pm_name,
-                install_result=result,
-                ok=result.ok,
-                message="Uninstalled" if result.ok else result.stderr.strip(),
-            )
-            outcomes.append(outcome)
-            if outcome.ok:
-                self._installed_names.discard(program.name)
-            log.write(f"[{'OK' if outcome.ok else 'FAILED'}] {outcome.name}: {outcome.message}")
+        end_label = "Idle"
+        try:
+            confirmed = await self.push_screen_wait(ConfirmUninstallModal(names))
+            if not confirmed:
+                log.write("Uninstall cancelled.")
+                return
+
+            pm_name = self.distro.package_manager
+            if not pm_name:
+                log.write("Cannot uninstall: no package manager detected")
+                return
+
+            backend = get_backend(pm_name)
+            total = len(programs)
+            for index, program in enumerate(programs, start=1):
+                self._update_job(f"Uninstalling {program.name} ({index}/{total})...")
+                log.write(f"Uninstalling {program.name} ({index}/{total})...")
+                result = await asyncio.to_thread(backend.uninstall, program.name)
+                self.logger.log_command(result)
+                outcome = InstallOutcome(
+                    name=program.name,
+                    package_manager=pm_name,
+                    install_result=result,
+                    ok=result.ok,
+                    message="Uninstalled" if result.ok else result.stderr.strip(),
+                )
+                outcomes.append(outcome)
+                if outcome.ok:
+                    self._installed_names.discard(program.name)
+                log.write(f"[{'OK' if outcome.ok else 'FAILED'}] {outcome.name}: {outcome.message}")
+                self._advance_job()
+            failed = sum(1 for o in outcomes if not o.ok)
+            end_label = f"Uninstall finished: {len(outcomes) - failed} succeeded, {failed} failed"
+        finally:
+            self._end_job(end_label)
 
         self.logger.log_install_batch(outcomes)
         log.write("--- Uninstall Selected finished ---")

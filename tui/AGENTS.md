@@ -35,6 +35,7 @@
  - A dedicated section, separate from the Installer, for font installation only — not bundled into "Install Selected"
  - The user pastes the URL for a font zip file, which is downloaded and extracted, matching the flow in fedora_reinstall/configs/fonts_install.sh, with a live preview of where it will be installed
  - Provide the user the option to use the default location for fonts in their distro, or enter their own custom location
+ - The default location is `$HOME/.local/share/fonts/$FONT_NAME` for the user who launched the app via `sudo` (looked up from `SUDO_UID`/`PKEXEC_UID`), not root's `/root/...`. Anything created inside that user's home is chowned to them, and `fc-cache` runs as them (`runuser -u <user>`) so the fonts land in their own font cache
  - "Install Font" installs the pasted URL; "Reset" clears the font fields back to defaults
 
 ## Specifics
@@ -43,6 +44,7 @@
  - Missing prerequisite package managers/plugins (flatpak, snapd, dnf copr plugin, etc.) required by a selected install are auto-installed silently before the dependent command runs, mirroring phase 1's required_pm/ behavior
  - The curated "well-known/common programs" catalog lives in an external data file (JSON/YAML) mapping program name to per-distro package name, not hardcoded in Python. Most entries include dnf/apt/pacman search terms (safe since these are essentially universal FOSS package names); a few (Moonlight, sshPilot, Topgrade) are intentionally dnf-only with a `_note` explaining why (Fedora-COPR-only or inconsistent naming elsewhere) rather than guessing at unverifiable apt/pacman names
  - Make sure that any installation/uninstallation command is run without requiring user input once it is committed
+ - A status bar above the output log shows when a job (Install Selected, Uninstall Selected, Install Font) is running: a spinner, the current step (e.g. "Installing nut (2/5)..."), and a progress bar (indeterminate for fonts). Only one job runs at a time — while one is running, all three job buttons are disabled and any further attempt is refused
  - Allow the user to navigate the TUI using the keyboard: tab to move between fields, shift+tab to move back between fields, space to select/deselect a field, enter to confirm an option, arrow keys to navigate within fields
  - Create a timestamped log file for each TUI session
  - Add to the log file after each "install selected"/"uninstall selected" process is run

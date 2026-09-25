@@ -1,8 +1,15 @@
+import os
+import pwd
 import zipfile
 from pathlib import Path
 
 from backend.exec import CommandResult
-from backend.fonts import default_font_dir, install_font_from_url
+from backend.fonts import (
+    FontOwner,
+    default_font_dir,
+    install_font_from_url,
+    invoking_user,
+)
 
 
 def test_default_font_dir_strips_zip():
@@ -64,3 +71,47 @@ def test_install_font_extract_failure_cleans_up(tmp_path):
     )
     assert not result.ok
     assert not dest_dir.exists()
+
+
+def test_invoking_user_from_sudo_env():
+    me = pwd.getpwuid(os.getuid())
+    owner = invoking_user({"SUDO_UID": str(me.pw_uid)})
+    if me.pw_uid == 0:
+        assert owner is None
+    else:
+        assert owner == FontOwner(name=me.pw_name, uid=me.pw_uid, gid=me.pw_gid, home=Path(me.pw_dir))
+
+
+def test_invoking_user_absent_or_invalid():
+    assert invoking_user({}) is None
+    assert invoking_user({"SUDO_UID": "not-a-number"}) is None
+    assert invoking_user({"SUDO_UID": "0"}) is None
+
+
+def test_install_font_for_invoking_user_chowns_and_runs_fc_cache_as_them(tmp_path):
+    home = tmp_path / "home"
+    home.mkdir()
+    owner = FontOwner(name="someone", uid=os.getuid(), gid=os.getgid(), home=home)
+    dest_dir = default_font_dir("https://example.com/UserFont.zip", base=home / ".local" / "share" / "fonts")
+    calls = []
+
+    def recording_run(argv):
+        calls.append(argv)
+        return _fake_run(argv)
+
+    def fake_downloader(url, dest):
+        with zipfile.ZipFile(dest, "w") as zf:
+            zf.writestr("UserFont-Regular.ttf", b"fake-font-bytes")
+
+    result = install_font_from_url(
+        "https://example.com/UserFont.zip",
+        dest_dir=dest_dir,
+        downloader=fake_downloader,
+        run=recording_run,
+        owner=owner,
+    )
+    assert result.ok
+    assert dest_dir == home / ".local" / "share" / "fonts" / "UserFont"
+    assert (dest_dir / "UserFont-Regular.ttf").exists()
+    assert (home / ".local").stat().st_uid == owner.uid
+    assert calls == [["runuser", "-u", "someone", "--", "fc-cache", "-f", str(dest_dir)]]

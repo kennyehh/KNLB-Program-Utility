@@ -15,13 +15,6 @@
       "prereqs": []
     },
     {
-      "name": "Discord",
-      "description": "Chat/voice client",
-      "package_manager_override": "snap",
-      "search_terms": {"snap": "discord"},
-      "prereqs": [{"type": "snap", "repo": null}]
-    },
-    {
       "name": "fastfetch",
       "description": "System info display",
       "package_manager_override": null,
@@ -48,14 +41,6 @@
       "package_manager_override": null,
       "search_terms": {"dnf": "micro", "apt": "micro", "pacman": "micro"},
       "prereqs": []
-    },
-    {
-      "name": "Moonlight",
-      "description": "Game streaming client",
-      "package_manager_override": null,
-      "search_terms": {"dnf": "moonlight"},
-      "prereqs": [],
-      "_note": "dnf-only on purpose: package naming isn't consistent across distros (seen as moonlight-qt elsewhere) and it may need a flatpak/third-party repo outside Fedora; a not-found search will prompt the user to check installation instructions rather than silently failing"
     },
     {
       "name": "OrcaSlicer",
