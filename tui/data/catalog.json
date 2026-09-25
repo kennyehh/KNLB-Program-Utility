@@ -1,0 +1,147 @@
+{
+  "programs": [
+    {
+      "name": "Alacritty",
+      "description": "GPU-accelerated terminal emulator",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "alacritty", "apt": "alacritty", "pacman": "alacritty"},
+      "prereqs": []
+    },
+    {
+      "name": "btop",
+      "description": "Resource monitor",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "btop", "apt": "btop", "pacman": "btop"},
+      "prereqs": []
+    },
+    {
+      "name": "Discord",
+      "description": "Chat/voice client",
+      "package_manager_override": "snap",
+      "search_terms": {"snap": "discord"},
+      "prereqs": [{"type": "snap", "repo": null}]
+    },
+    {
+      "name": "fastfetch",
+      "description": "System info display",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "fastfetch", "apt": "fastfetch", "pacman": "fastfetch"},
+      "prereqs": []
+    },
+    {
+      "name": "Firefox",
+      "description": "Web browser",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "firefox", "apt": "firefox", "pacman": "firefox"},
+      "prereqs": []
+    },
+    {
+      "name": "Kate",
+      "description": "Text editor",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "kate", "apt": "kate", "pacman": "kate"},
+      "prereqs": []
+    },
+    {
+      "name": "micro",
+      "description": "Terminal-based text editor",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "micro", "apt": "micro", "pacman": "micro"},
+      "prereqs": []
+    },
+    {
+      "name": "Moonlight",
+      "description": "Game streaming client",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "moonlight"},
+      "prereqs": [],
+      "_note": "dnf-only on purpose: package naming isn't consistent across distros (seen as moonlight-qt elsewhere) and it may need a flatpak/third-party repo outside Fedora; a not-found search will prompt the user to check installation instructions rather than silently failing"
+    },
+    {
+      "name": "OrcaSlicer",
+      "description": "3D printing slicer",
+      "package_manager_override": "flatpak",
+      "search_terms": {"flatpak": "com.orcaslicer.OrcaSlicer"},
+      "prereqs": [{"type": "flatpak", "repo": null}]
+    },
+    {
+      "name": "Plex",
+      "description": "Media server desktop client",
+      "package_manager_override": "snap",
+      "search_terms": {"snap": "plex-desktop"},
+      "prereqs": [{"type": "snap", "repo": null}]
+    },
+    {
+      "name": "sshPilot",
+      "description": "SSH connection manager",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "sshpilot"},
+      "prereqs": [{"type": "copr", "repo": "mahdif62/sshpilot"}],
+      "_note": "dnf-only on purpose: distributed via a Fedora COPR, almost certainly not packaged for Debian/Ubuntu and would need AUR on Arch; a not-found search will prompt the user to check installation instructions rather than silently failing"
+    },
+    {
+      "name": "Steam",
+      "description": "Game platform client",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "steam", "apt": "steam", "pacman": "steam"},
+      "prereqs": []
+    },
+    {
+      "name": "Strawberry",
+      "description": "Music player",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "strawberry", "apt": "strawberry", "pacman": "strawberry"},
+      "prereqs": []
+    },
+    {
+      "name": "Thunderbird",
+      "description": "Email client",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "thunderbird", "apt": "thunderbird", "pacman": "thunderbird"},
+      "prereqs": []
+    },
+    {
+      "name": "Topgrade",
+      "description": "Upgrades everything (dnf, flatpak, etc.) in one command",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "topgrade"},
+      "prereqs": [{"type": "copr", "repo": "lilay/topgrade"}],
+      "_note": "dnf-only on purpose: installed via a Fedora COPR here; may be in Arch's official repos but Debian/Ubuntu stable likely doesn't package it, so a not-found search will prompt the user to check installation instructions rather than silently failing"
+    },
+    {
+      "name": "Yakuake",
+      "description": "Drop-down terminal for KDE",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "yakuake", "apt": "yakuake", "pacman": "yakuake"},
+      "prereqs": []
+    },
+    {
+      "name": "htop",
+      "description": "Interactive process viewer",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "htop", "apt": "htop", "pacman": "htop"},
+      "prereqs": []
+    },
+    {
+      "name": "Whipper",
+      "description": "Disc ripping tool",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "whipper", "apt": "whipper", "pacman": "whipper"},
+      "prereqs": []
+    },
+    {
+      "name": "Guake",
+      "description": "Drop-down terminal for GNOME",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "guake", "apt": "guake", "pacman": "guake"},
+      "prereqs": []
+    },
+    {
+      "name": "Gimp",
+      "description": "GNU Image Manipulation Program",
+      "package_manager_override": null,
+      "search_terms": {"dnf": "gimp", "apt": "gimp", "pacman": "gimp"},
+      "prereqs": []
+    }
+  ]
+}

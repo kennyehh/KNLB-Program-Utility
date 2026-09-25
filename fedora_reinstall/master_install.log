@@ -1,0 +1,251 @@
+
+---
+Installation Log: 2026-09-13 09:32:24
+-
+Current Distribution: Fedora
+Package Manager: /usr/sbin/dnf
+-
+Executing install_btop.sh...
+Updating and loading repositories:
+Repositories loaded.
+Package   Arch   Version        Repository      Size
+Installing:
+ btop     x86_64 0:1.4.7-1.fc44 updates      1.8 MiB
+Installing weak dependencies:
+ rocm-smi x86_64 0:7.1.1-3.fc44 fedora       2.7 MiB
+
+Transaction Summary:
+ Installing:         2 packages
+
+Total size of inbound packages is 1 MiB. Need to download 1 MiB.
+After this operation, 4 MiB extra will be used (install 4 MiB, remove 0 B).
+[1/2] btop-0:1.4.7-1.fc44.x86_64        100% | 692.3 KiB/s | 654.2 KiB |  00m01s
+[2/2] rocm-smi-0:7.1.1-3.fc44.x86_64    100% | 633.5 KiB/s | 622.8 KiB |  00m01s
+--------------------------------------------------------------------------------
+[2/2] Total                             100% | 784.9 KiB/s |   1.2 MiB |  00m02s
+Running transaction
+[1/4] Verify package files              100% |  66.0   B/s |   2.0   B |  00m00s
+[2/4] Prepare transaction               100% |   4.0   B/s |   2.0   B |  00m00s
+[3/4] Installing rocm-smi-0:7.1.1-3.fc4 100% |  27.1 MiB/s |   2.7 MiB |  00m00s
+[4/4] Installing btop-0:1.4.7-1.fc44.x8 100% |   2.3 MiB/s |   1.8 MiB |  00m01s
+Complete!
+Success!
+Skipped install_cliamp.sh (potentially malicious)
+Executing install_kate.sh...
+Updating and loading repositories:
+Repositories loaded.
+Package "kate-26.08.0-1.fc44.x86_64" is already installed.
+
+Nothing to do.
+Success!
+Executing install_micro.sh...
+Updating and loading repositories:
+Repositories loaded.
+Package Arch   Version         Repository      Size
+Installing:
+ micro  x86_64 0:2.0.15-1.fc44 fedora      13.3 MiB
+
+Transaction Summary:
+ Installing:         1 package
+
+Total size of inbound packages is 4 MiB. Need to download 4 MiB.
+After this operation, 13 MiB extra will be used (install 13 MiB, remove 0 B).
+[1/1] micro-0:2.0.15-1.fc44.x86_64      100% |   5.4 MiB/s |   4.5 MiB |  00m01s
+--------------------------------------------------------------------------------
+[1/1] Total                             100% |   4.3 MiB/s |   4.5 MiB |  00m01s
+Running transaction
+[1/3] Verify package files              100% |  14.0   B/s |   1.0   B |  00m00s
+[2/3] Prepare transaction               100% |   2.0   B/s |   1.0   B |  00m00s
+[3/3] Installing micro-0:2.0.15-1.fc44. 100% |  21.7 MiB/s |  13.3 MiB |  00m01s
+Complete!
+Success!
+Executing install_moonlight.sh...
+Updating and loading repositories:
+Repositories loaded.
+Failed to resolve the transaction:
+No match for argument: moonlight
+You can try to add to command line:
+  --skip-unavailable to skip unavailable packages
+Error in install_moonlight.sh
+Executing install_plex.sh...
+error: unknown flag `y'
+Error in install_plex.sh
+Executing install_sshPilot.sh...
+ https://copr.fedorainfracloud.org/api_ 100% | 996.0   B/s | 783.0   B |  00m01s
+Enabling a Copr repository. Please note that this repository is not part
+of the main distribution, and quality may vary.
+
+The Fedora Project does not exercise any power over the contents of
+this repository beyond the rules outlined in the Copr FAQ at
+<https://docs.copr.fedorainfracloud.org/user_documentation.html#what-i-can-build-in-copr>,
+and packages are not held to any quality or security level.
+
+Please do not file bug reports about these packages in Fedora
+Bugzilla. In case of problems, contact the owner of this repository.
+Is this ok [y/N]: Updating and loading repositories:
+ Copr repo for sshpilot owned by mahdif 100% |  13.7 KiB/s |   6.5 KiB |  00m00s
+Repositories loaded.
+Package                       Arch   Version           Repository                                            Size
+Installing:
+ sshpilot                     noarch 0:6.1.1-1.fc44    copr:copr.fedorainfracloud.org:mahdif62:sshpilot  28.0 MiB
+Installing dependencies:
+ gtksourceview5               x86_64 0:5.20.0-1.fc44   fedora                                             4.6 MiB
+ javascriptcoregtk6.0         x86_64 0:2.52.5-1.fc44   updates                                           32.2 MiB
+ libmanette                   x86_64 0:0.2.13-2.fc44   fedora                                           367.2 KiB
+ libtomcrypt                  x86_64 0:1.18.2-23.fc44  fedora                                           938.6 KiB
+ python3-argon2-cffi          noarch 0:23.1.0-9.fc44   fedora                                            72.7 KiB
+ python3-argon2-cffi-bindings x86_64 0:21.2.0-14.fc44  fedora                                            51.2 KiB
+ python3-construct            noarch 0:2.10.70-12.fc44 fedora                                             1.0 MiB
+ python3-cryptography         x86_64 0:50.0.0-1.fc44   updates                                            6.4 MiB
+ python3-importlib-metadata   noarch 0:8.7.1-2.fc44    fedora                                           180.4 KiB
+ python3-jaraco-classes       noarch 0:3.4.0-11.fc44   fedora                                            40.7 KiB
+ python3-jaraco-context       noarch 0:6.1.0-2.fc44    fedora                                            36.4 KiB
+ python3-jaraco-functools     noarch 0:4.3.0-2.fc44    fedora                                            75.1 KiB
+ python3-jeepney              noarch 0:0.9.0-8.fc44    fedora                                             1.8 MiB
+ python3-keyring              noarch 0:25.7.0-3.fc44   fedora                                           305.5 KiB
+ python3-more-itertools       noarch 0:10.8.0-1.fc44   updates                                          777.2 KiB
+ python3-pycryptodomex        x86_64 0:3.23.0-5.fc44   fedora                                             3.9 MiB
+ python3-pyotp                noarch 0:2.9.0-12.fc44   fedora                                            63.6 KiB
+ python3-secretstorage        noarch 0:3.5.0-2.fc44    fedora                                           130.6 KiB
+ python3-shtab                noarch 0:1.7.2-5.fc44    fedora                                           133.7 KiB
+ python3-zipp                 noarch 0:3.23.0-3.fc44   fedora                                            60.7 KiB
+ simdutf                      x86_64 0:7.2.1-3.fc44    fedora                                           611.3 KiB
+ sshpass                      x86_64 0:1.09-12.fc44    fedora                                            42.4 KiB
+ vte-profile                  x86_64 0:0.84.1-1.fc44   updates                                           52.1 KiB
+ vte291                       x86_64 0:0.84.1-1.fc44   updates                                            1.2 MiB
+ vte291-gtk4                  x86_64 0:0.84.1-1.fc44   updates                                            1.0 MiB
+ webkitgtk6.0                 x86_64 0:2.52.5-1.fc44   updates                                           91.7 MiB
+Installing weak dependencies:
+ python3-keyring+completion   noarch 0:25.7.0-3.fc44   fedora                                             8.3 KiB
+ python3-pykeepass            noarch 1:4.2.0-1.fc44    updates                                          450.5 KiB
+ telnet                       x86_64 1:0.17-96.fc44    fedora                                           112.2 KiB
+
+Transaction Summary:
+ Installing:        30 packages
+
+Total size of inbound packages is 54 MiB. Need to download 54 MiB.
+After this operation, 176 MiB extra will be used (install 176 MiB, remove 0 B).
+Is this ok [y/N]: [ 1/30] sshpass-0:1.09-12.fc44.x86_64   100% |  77.4 KiB/s |  27.1 KiB |  00m00s
+[ 2/30] sshpilot-0:6.1.1-1.fc44.noarch  100% |  24.5 MiB/s |  10.6 MiB |  00m00s
+[ 3/30] python3-keyring-0:25.7.0-3.fc44 100% | 281.8 KiB/s | 122.6 KiB |  00m00s
+[ 4/30] python3-jaraco-classes-0:3.4.0- 100% | 257.3 KiB/s |  22.1 KiB |  00m00s
+[ 5/30] python3-jaraco-context-0:6.1.0- 100% | 472.0 KiB/s |  23.1 KiB |  00m00s
+[ 6/30] python3-jaraco-functools-0:4.3. 100% | 475.3 KiB/s |  25.7 KiB |  00m00s
+[ 7/30] python3-secretstorage-0:3.5.0-2 100% | 790.1 KiB/s |  47.4 KiB |  00m00s
+[ 8/30] python3-jeepney-0:0.9.0-8.fc44. 100% | 923.3 KiB/s | 333.3 KiB |  00m00s
+[ 9/30] gtksourceview5-0:5.20.0-1.fc44. 100% |   1.4 MiB/s | 987.0 KiB |  00m01s
+[10/30] simdutf-0:7.2.1-3.fc44.x86_64   100% | 517.6 KiB/s | 167.2 KiB |  00m00s
+[11/30] vte291-gtk4-0:0.84.1-1.fc44.x86 100% | 531.6 KiB/s | 424.7 KiB |  00m01s
+[12/30] vte291-0:0.84.1-1.fc44.x86_64   100% | 801.9 KiB/s | 503.6 KiB |  00m01s
+[13/30] python3-cryptography-0:50.0.0-1 100% |   1.1 MiB/s |   1.8 MiB |  00m02s
+[14/30] webkitgtk6.0-0:2.52.5-1.fc44.x8 100% |  25.1 MiB/s |  28.1 MiB |  00m01s
+[15/30] libmanette-0:0.2.13-2.fc44.x86_ 100% | 112.4 KiB/s |  67.8 KiB |  00m01s
+[16/30] vte-profile-0:0.84.1-1.fc44.x86 100% | 402.9 KiB/s |  27.8 KiB |  00m00s
+[17/30] python3-more-itertools-0:10.8.0 100% |   1.3 MiB/s | 132.8 KiB |  00m00s
+[18/30] python3-pykeepass-1:4.2.0-1.fc4 100% |   1.7 MiB/s | 126.5 KiB |  00m00s
+[19/30] python3-argon2-cffi-0:23.1.0-9. 100% | 427.6 KiB/s |  41.1 KiB |  00m00s
+[20/30] python3-importlib-metadata-0:8. 100% | 549.9 KiB/s |  73.7 KiB |  00m00s
+[21/30] python3-construct-0:2.10.70-12. 100% | 675.7 KiB/s | 160.1 KiB |  00m00s
+[22/30] python3-pyotp-0:2.9.0-12.fc44.n 100% | 424.9 KiB/s |  37.4 KiB |  00m00s
+[23/30] python3-argon2-cffi-bindings-0: 100% | 291.6 KiB/s |  27.7 KiB |  00m00s
+[24/30] python3-zipp-0:3.23.0-3.fc44.no 100% | 611.1 KiB/s |  37.3 KiB |  00m00s
+[25/30] libtomcrypt-0:1.18.2-23.fc44.x8 100% |   3.5 MiB/s | 409.8 KiB |  00m00s
+[26/30] telnet-1:0.17-96.fc44.x86_64    100% | 995.4 KiB/s |  62.7 KiB |  00m00s
+[27/30] python3-keyring+completion-0:25 100% | 385.6 KiB/s |  14.3 KiB |  00m00s
+[28/30] python3-shtab-0:1.7.2-5.fc44.no 100% |   1.0 MiB/s |  44.9 KiB |  00m00s
+[29/30] python3-pycryptodomex-0:3.23.0- 100% |   1.1 MiB/s |   1.3 MiB |  00m01s
+[30/30] javascriptcoregtk6.0-0:2.52.5-1 100% |   3.3 MiB/s |   8.7 MiB |  00m03s
+--------------------------------------------------------------------------------
+[30/30] Total                           100% |  10.0 MiB/s |  54.4 MiB |  00m05s
+Running transaction
+[31/31] https://download.copr.fedorainf 100% | 700.0   B/s |   1.0 KiB |  00m01s
+--------------------------------------------------------------------------------
+[31/31] Total                           100% |  10.0 MiB/s |  54.4 MiB |  00m05s
+Importing OpenPGP key 0xB6A48F68:
+ UserID     : "mahdif62_sshpilot (None) <mahdif62#sshpilot@copr.fedorahosted.org>"
+ Fingerprint: 7829FFA1FDA22B030465FD73D49E6BD6B6A48F68
+ From       : https://download.copr.fedorainfracloud.org/results/mahdif62/sshpilot/pubkey.gpg
+Is this ok [y/N]: The key was successfully imported.
+[ 1/32] Verify package files            100% |  58.0   B/s |  30.0   B |  00m01s
+[ 2/32] Prepare transaction             100% |  63.0   B/s |  30.0   B |  00m00s
+[ 3/32] Installing python3-more-itertoo 100% |  10.3 MiB/s | 781.4 KiB |  00m00s
+[ 4/32] Installing simdutf-0:7.2.1-3.fc 100% |  54.4 MiB/s | 612.8 KiB |  00m00s
+[ 5/32] Installing python3-cryptography 100% |  69.4 MiB/s |   6.5 MiB |  00m00s
+[ 6/32] Installing python3-jeepney-0:0. 100% |  50.0 MiB/s |   1.8 MiB |  00m00s
+[ 7/32] Installing python3-secretstorag 100% |  13.4 MiB/s | 136.9 KiB |  00m00s
+[ 8/32] Installing python3-jaraco-class 100% |   6.3 MiB/s |  45.3 KiB |  00m00s
+[ 9/32] Installing python3-jaraco-funct 100% |  12.7 MiB/s |  78.2 KiB |  00m00s
+[10/32] Installing python3-shtab-0:1.7. 100% |   5.6 MiB/s | 138.6 KiB |  00m00s
+[11/32] Installing libtomcrypt-0:1.18.2 100% |  91.8 MiB/s | 939.7 KiB |  00m00s
+[12/32] Installing python3-pycryptodome 100% |  44.8 MiB/s |   4.0 MiB |  00m00s
+[13/32] Installing python3-zipp-0:3.23. 100% |   8.2 MiB/s |  67.0 KiB |  00m00s
+[14/32] Installing python3-importlib-me 100% |  16.9 MiB/s | 190.8 KiB |  00m00s
+[15/32] Installing python3-argon2-cffi- 100% |   6.8 MiB/s |  55.3 KiB |  00m00s
+[16/32] Installing python3-argon2-cffi- 100% |   9.8 MiB/s |  79.9 KiB |  00m00s
+[17/32] Installing python3-pyotp-0:2.9. 100% |   8.6 MiB/s |  70.7 KiB |  00m00s
+[18/32] Installing python3-construct-0: 100% |  62.7 MiB/s |   1.0 MiB |  00m00s
+[19/32] Installing vte-profile-0:0.84.1 100% |  10.4 MiB/s |  53.4 KiB |  00m00s
+[20/32] Installing vte291-0:0.84.1-1.fc 100% |  10.8 MiB/s |   1.2 MiB |  00m00s
+[21/32] Installing vte291-gtk4-0:0.84.1 100% |  90.5 MiB/s |   1.0 MiB |  00m00s
+[22/32] Installing javascriptcoregtk6.0 100% | 210.4 MiB/s |  32.2 MiB |  00m00s
+[23/32] Installing libmanette-0:0.2.13- 100% |  51.5 MiB/s | 368.9 KiB |  00m00s
+[24/32] Installing webkitgtk6.0-0:2.52. 100% | 172.8 MiB/s |  91.7 MiB |  00m01s
+[25/32] Installing gtksourceview5-0:5.2 100% |  88.9 MiB/s |   4.6 MiB |  00m00s
+[26/32] Installing python3-jaraco-conte 100% |   5.5 MiB/s |  39.8 KiB |  00m00s
+[27/32] Installing python3-keyring-0:25 100% |   9.1 MiB/s | 325.9 KiB |  00m00s
+[28/32] Installing sshpass-0:1.09-12.fc 100% |   1.9 MiB/s |  43.9 KiB |  00m00s
+[29/32] Installing sshpilot-0:6.1.1-1.f 100% |  70.0 MiB/s |  28.3 MiB |  00m00s
+[30/32] Installing python3-keyring+comp 100% |   2.2 MiB/s |   8.9 KiB |  00m00s
+[31/32] Installing python3-pykeepass-1: 100% |  34.8 MiB/s | 463.3 KiB |  00m00s
+[32/32] Installing telnet-1:0.17-96.fc4 100% | 115.6 KiB/s | 113.3 KiB |  00m01s
+Complete!
+Success!
+Executing install_strawberry.sh...
+Updating and loading repositories:
+Repositories loaded.
+Package         Arch   Version         Repository      Size
+Installing:
+ strawberry     x86_64 0:1.2.28-1.fc44 updates     13.9 MiB
+Installing dependencies:
+ libgpod        x86_64 0:0.8.3-56.fc44 fedora     887.0 KiB
+ sg3_utils-libs x86_64 0:1.48-10.fc44  updates    309.4 KiB
+
+Transaction Summary:
+ Installing:         3 packages
+
+Total size of inbound packages is 8 MiB. Need to download 8 MiB.
+After this operation, 15 MiB extra will be used (install 15 MiB, remove 0 B).
+[1/3] sg3_utils-libs-0:1.48-10.fc44.x86 100% | 405.1 KiB/s | 124.4 KiB |  00m00s
+[2/3] libgpod-0:0.8.3-56.fc44.x86_64    100% | 745.4 KiB/s | 308.6 KiB |  00m00s
+[3/3] strawberry-0:1.2.28-1.fc44.x86_64 100% |  11.2 MiB/s |   7.1 MiB |  00m01s
+--------------------------------------------------------------------------------
+[3/3] Total                             100% |   6.1 MiB/s |   7.6 MiB |  00m01s
+Running transaction
+[1/5] Verify package files              100% |  44.0   B/s |   3.0   B |  00m00s
+[2/5] Prepare transaction               100% |   6.0   B/s |   3.0   B |  00m00s
+[3/5] Installing sg3_utils-libs-0:1.48- 100% |  37.9 MiB/s | 310.7 KiB |  00m00s
+[4/5] Installing libgpod-0:0.8.3-56.fc4 100% |  26.4 MiB/s | 892.5 KiB |  00m00s
+[5/5] Installing strawberry-0:1.2.28-1. 100% |  20.7 MiB/s |  13.9 MiB |  00m01s
+Complete!
+Success!
+Executing install_yakuake.sh...
+Updating and loading repositories:
+Repositories loaded.
+Package  Arch   Version          Repository      Size
+Installing:
+ yakuake x86_64 0:26.08.0-1.fc44 updates      2.5 MiB
+
+Transaction Summary:
+ Installing:         1 package
+
+Total size of inbound packages is 600 KiB. Need to download 600 KiB.
+After this operation, 3 MiB extra will be used (install 3 MiB, remove 0 B).
+[1/1] yakuake-0:26.08.0-1.fc44.x86_64   100% |   1.6 MiB/s | 600.1 KiB |  00m00s
+--------------------------------------------------------------------------------
+[1/1] Total                             100% | 963.3 KiB/s | 600.1 KiB |  00m01s
+Running transaction
+[1/3] Verify package files              100% | 125.0   B/s |   1.0   B |  00m00s
+[2/3] Prepare transaction               100% |   2.0   B/s |   1.0   B |  00m00s
+[3/3] Installing yakuake-0:26.08.0-1.fc 100% |   4.0 MiB/s |   2.6 MiB |  00m01s
+Complete!
+Success!

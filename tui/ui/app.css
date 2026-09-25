@@ -1,0 +1,144 @@
+Screen {
+    layout: vertical;
+}
+
+#banner {
+    content-align: center middle;
+    text-align: center;
+    height: auto;
+    padding: 1 0 0 0;
+}
+
+#nav-buttons {
+    height: auto;
+    align: center middle;
+    padding: 0 0 1 0;
+}
+
+#nav-buttons Button {
+    width: 20;
+    margin: 0 1;
+}
+
+#distro-info {
+    content-align: center middle;
+    text-align: center;
+    height: auto;
+    color: $text-muted;
+}
+
+#content-switcher {
+    height: 1fr;
+}
+
+#installer-pane,
+#uninstaller-pane,
+#fonts-pane {
+    height: 100%;
+}
+
+#main-body,
+#uninstall-body {
+    height: 1fr;
+}
+
+ProgramCatalog,
+UninstallCatalog {
+    width: 2fr;
+    height: 100%;
+    border: solid $primary;
+    padding: 1;
+}
+
+SelectionPanel {
+    width: 1fr;
+    height: 100%;
+    border: solid $accent;
+    padding: 1;
+}
+
+FontPanel {
+    height: 1fr;
+    border: solid $primary;
+    padding: 1;
+}
+
+#program-list,
+#uninstall-list {
+    height: 1fr;
+}
+
+/* Explicit green for the checkbox "X" mark itself, independent of whatever
+   color a program's name is styled with (installed/catalog-match). */
+#program-list > .selection-list--button-selected,
+#program-list > .selection-list--button-selected-highlighted,
+#uninstall-list > .selection-list--button-selected,
+#uninstall-list > .selection-list--button-selected-highlighted {
+    color: green;
+}
+
+/* Program name coloring: Textual always renders a SelectionList's own CSS
+   color "on top of" any style embedded in an option's prompt content, so
+   ColorableSelectionList exposes these as real component classes instead. */
+#program-list > .option-list--option-green {
+    color: green;
+}
+
+#uninstall-list > .option-list--option-lightblue {
+    color: lightskyblue;
+}
+
+#selection-log {
+    height: 1fr;
+}
+
+.pane-title {
+    text-style: bold;
+    padding-bottom: 1;
+}
+
+.hint {
+    color: $text-muted;
+    height: auto;
+    padding-bottom: 1;
+}
+
+#search-row {
+    height: auto;
+}
+
+#search-row #manual-name-input {
+    width: 1fr;
+}
+
+#action-buttons,
+#uninstall-action-buttons,
+#font-action-buttons {
+    height: auto;
+}
+
+#action-buttons Button,
+#uninstall-action-buttons Button,
+#font-action-buttons Button {
+    width: 1fr;
+}
+
+#output-log {
+    height: 10;
+    border: solid $accent;
+}
+
+#confirm-modal {
+    width: 70;
+    height: auto;
+    border: thick $error;
+    padding: 1 2;
+    background: $surface;
+}
+
+#confirm-modal-buttons {
+    height: auto;
+    align: right middle;
+    padding-top: 1;
+}
+
