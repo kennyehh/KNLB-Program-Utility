@@ -1,5 +1,6 @@
-# master_install.sh
+# KNLB-Program-Utility
 
-This is a universal Linux shell script that will run all install scripts in the same working directory.
-
-The intention is to have a single script that will install all desired packages and tools on a new Linux system.
+ - This program is designed to assist with the installation and removal of programs in a Linux environment.
+ - There is a catalog of commonly use programs
+ - The user can also search for programs by name
+ - There is a font installation utility
